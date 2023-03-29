@@ -6,14 +6,13 @@ import {useForegroundPermissions} from "expo-location";
 import {PermissionStatus} from "expo-image-picker";
 import {getMapPreview} from "../../util/location";
 import {useEffect, useState} from "react";
+import {useNavigation} from "@react-navigation/native";
 
 function LocationPicker() {
 
+    const navigation = useNavigation();
     const [locationPermissionInformation, requestPermission] = useForegroundPermissions();
-    const [pickedLocation, setPickedLocation] = useState(
-        {
-        }
-    );
+    const [pickedLocation, setPickedLocation] = useState();
     async function verifyPermissions() {
         if (locationPermissionInformation.status === PermissionStatus.UNDETERMINED) {
             const response = await requestPermission();
@@ -50,7 +49,7 @@ function LocationPicker() {
     }
 
     function pickOnMapHandler() {
-
+        navigation.navigate("Map");
     }
 
     let locationPreview = <Text>No Location picked yet</Text>
@@ -67,7 +66,6 @@ function LocationPicker() {
                 {locationPreview}
             </View>
             <View style={styles.actions}>
-                
                 <OutlinedButton icon="location" onPress={getLocationHandler}>
                     Locate user
                 </OutlinedButton>
