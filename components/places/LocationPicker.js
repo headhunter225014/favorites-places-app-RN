@@ -5,14 +5,29 @@ import {getCurrentPositionAsync} from "expo-location";
 import {useForegroundPermissions} from "expo-location";
 import {PermissionStatus} from "expo-image-picker";
 import {getMapPreview} from "../../util/location";
-import {useEffect, useState} from "react";
-import {useNavigation} from "@react-navigation/native";
+import {useEffect, useState, useCallback} from "react";
+import {useNavigation, useRoute} from "@react-navigation/native";
 
 function LocationPicker() {
 
     const navigation = useNavigation();
+    const route = useRoute();
+
     const [locationPermissionInformation, requestPermission] = useForegroundPermissions();
     const [pickedLocation, setPickedLocation] = useState();
+    const mapPickedLocation = useCallback(
+        route.params && {
+            lat: route.params.pickedLat,
+            lng: route.params.pickedLng,
+        },
+        [route.params]
+    );
+
+    useEffect(() => {
+        if (mapPickedLocation) {
+            setPickedLocation(mapPickedLocation)
+        }
+    }, [mapPickedLocation]);
     async function verifyPermissions() {
         if (locationPermissionInformation.status === PermissionStatus.UNDETERMINED) {
             const response = await requestPermission();
