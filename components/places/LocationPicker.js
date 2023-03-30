@@ -4,11 +4,11 @@ import {Colors} from "../../constants/colors";
 import {getCurrentPositionAsync} from "expo-location";
 import {useForegroundPermissions} from "expo-location";
 import {PermissionStatus} from "expo-image-picker";
-import {getMapPreview} from "../../util/location";
+import {getAddress, getMapPreview} from "../../util/location";
 import {useEffect, useState, useCallback} from "react";
 import {useNavigation, useRoute} from "@react-navigation/native";
 
-function LocationPicker() {
+function LocationPicker({onLocationPick}) {
 
     const navigation = useNavigation();
     const route = useRoute();
@@ -60,8 +60,18 @@ function LocationPicker() {
         setPickedLocation(
             {lat: location.coords.latitude,
                 lng: location.coords.longitude});
-
     }
+
+    useEffect(() => {
+        async function handlerLocation() {
+            if (pickedLocation) {
+                const address = await getAddress(pickedLocation.lat, pickedLocation.lng)
+                onLocationPick({...pickedLocation, address: address});
+            }
+        }
+        handlerLocation();
+
+    }, [pickedLocation, onLocationPick]);
 
     function pickOnMapHandler() {
         navigation.navigate("Map");
