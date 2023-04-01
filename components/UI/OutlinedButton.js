@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: Colors.primary500,
         flexDirection: 'row',
+        borderRadius: 6
     },
     pressed: {
         opacity: 0.7

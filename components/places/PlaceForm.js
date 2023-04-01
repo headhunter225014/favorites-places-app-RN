@@ -39,7 +39,7 @@ function PlaceForm({onCreatePlace}) {
             </View>
             <ImagePicker onImageTaken={onImageTaken}/>
             <LocationPicker onLocationPick={onLocationPick}/>
-            <ButtonCustom onPress={savePlaceHandler}>
+            <ButtonCustom style={styles.marginButton} onPress={savePlaceHandler}>
                 Add Place
             </ButtonCustom>
         </ScrollView>
@@ -67,6 +67,9 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2,
         backgroundColor: Colors.primary100,
         borderRadius: 6
+    },
+    marginButton: {
+        marginTop: 10
     }
 })
 

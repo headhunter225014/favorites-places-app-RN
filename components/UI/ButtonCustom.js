@@ -1,9 +1,9 @@
 import {Pressable, Text, StyleSheet} from "react-native";
 import {Colors} from "../../constants/colors";
 
-function ButtonCustom({onPress, children}) {
+function ButtonCustom({onPress, children, style}) {
     return (
-        <Pressable style={({pressed}) => [styles.button, pressed && styles.pressed]} onPress={onPress}>
+        <Pressable style={({pressed}) => [styles.button, pressed && styles.pressed, style]} onPress={onPress}>
             <Text style={styles.text}>
                 {children}
             </Text>
