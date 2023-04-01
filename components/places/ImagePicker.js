@@ -1,4 +1,4 @@
-import {View, Button, Alert, Image, Text, StyleSheet} from "react-native";
+import {View, Button, Alert, Image, Text, StyleSheet, Pressable} from "react-native";
 import {launchCameraAsync, useCameraPermissions, PermissionStatus} from "expo-image-picker";
 import {useState} from "react";
 import {Colors} from "../../constants/colors";
@@ -47,9 +47,11 @@ function ImagePicker({onImageTaken}) {
 
     return (
         <View>
-            <View style={styles.imagePreview}>
-                {imagePreview}
-            </View>
+            <Pressable style={({pressed}) => pressed && styles.pressed} onPress={takeImageHandler}>
+                <View style={styles.imagePreview}>
+                    {imagePreview}
+                </View>
+            </Pressable>
 
             <OutlinedButton onPress={takeImageHandler}
                             icon="camera">Take an image
@@ -72,6 +74,9 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         borderRadius: 4
+    },
+    pressed: {
+        opacity: 0.5
     }
 })
 

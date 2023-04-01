@@ -24,10 +24,8 @@ export default function App() {
         });
     }, []);
 
-    if (!dbInit)
-    {
-        return <AppLoading/>
-    }
+
+
   return (
     <>
       <StatusBar style='dark'/>

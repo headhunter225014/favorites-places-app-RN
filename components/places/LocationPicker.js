@@ -1,4 +1,4 @@
-import {View, StyleSheet, Alert, Image, Text} from "react-native";
+import {View, StyleSheet, Alert, Image, Text, Pressable} from "react-native";
 import OutlinedButton from "../UI/OutlinedButton";
 import {Colors} from "../../constants/colors";
 import {getCurrentPositionAsync} from "expo-location";
@@ -87,9 +87,11 @@ function LocationPicker({onLocationPick}) {
 
     return(
         <View>
-            <View style={styles.mapPreview}>
-                {locationPreview}
-            </View>
+            <Pressable style={({pressed}) => [styles.mapPreview, pressed && styles.pressed]} onPress={getLocationHandler}>
+                <View style={styles.mapPreview}>
+                    {locationPreview}
+                </View>
+            </Pressable>
             <View style={styles.actions}>
                 <OutlinedButton icon="location" onPress={getLocationHandler}>
                     Locate user
@@ -123,6 +125,9 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         borderRadius: 4
+    },
+    pressed: {
+        opacity: 0.5
     }
 
 });

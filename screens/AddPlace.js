@@ -2,7 +2,7 @@ import PlaceForm from "../components/places/PlaceForm";
 
 function AddPlace({navigation}) {
 
-    function createPlaceHandler(place) {
+    function createPlaceHandler(place) {12
         navigation.navigate('AllPlaces', {
             place: place
         })
