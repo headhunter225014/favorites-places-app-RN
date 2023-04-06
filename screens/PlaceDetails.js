@@ -1,26 +1,50 @@
-import {ScrollView, Image, View, StyleSheet, Text} from "react-native";
-import OutlinedButton from "../components/UI/OutlinedButton";
-import {Colors} from "../constants/colors";
-import {useEffect} from "react";
+import { useEffect, useState } from 'react';
+import { ScrollView, Image, View, Text, StyleSheet } from 'react-native';
 
-function PlaceDetails({route}) {
-    const selectedPlaceId = route.params.placeId
+import OutlinedButton from '../components/UI/OutlinedButton';
+import { Colors } from '../constants/colors';
+import { fetchPlaceDetails } from '../util/database';
+
+function PlaceDetails({ route, navigation }) {
+    const [fetchedPlace, setFetchedPlace] = useState();
+
     function showOnMapHandler() {
-
+        navigation.navigate("Map", {
+            initialLat: fetchedPlace.location.lat,
+            initialLng: fetchedPlace.location.lng
+        });
     }
 
-    useEffect(() => {
+    const selectedPlaceId = route.params.placeId;
 
+    useEffect(() => {
+        async function loadPlaceData() {
+            const place = await fetchPlaceDetails(selectedPlaceId);
+            setFetchedPlace(place);
+            navigation.setOptions({
+                title: place.title,
+            });
+        }
+
+        loadPlaceData();
     }, [selectedPlaceId]);
+
+    if (!fetchedPlace) {
+        return (
+            <View style={styles.fallback}>
+                <Text>Loading place data...</Text>
+            </View>
+        );
+    }
 
     return (
         <ScrollView>
-            <Image style={styles.image}/>
+            <Image style={styles.image} source={{ uri: fetchedPlace.imageUri }} />
             <View style={styles.locationContainer}>
-                <View style={styles.addressLocation}>
-                    <Text style={styles.address}>Address</Text>
+                <View style={styles.addressContainer}>
+                    <Text style={styles.address}>{fetchedPlace.address}</Text>
                 </View>
-                <OutlinedButton icon='map' onPress={showOnMapHandler}>
+                <OutlinedButton icon="map" onPress={showOnMapHandler}>
                     View on Map
                 </OutlinedButton>
             </View>
@@ -28,26 +52,30 @@ function PlaceDetails({route}) {
     );
 }
 
+export default PlaceDetails;
+
 const styles = StyleSheet.create({
+    fallback: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     image: {
         height: '35%',
         minHeight: 300,
-        width: '100%'
+        width: '100%',
     },
     locationContainer: {
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
-    addressLocation: {
-        padding: 20
+    addressContainer: {
+        padding: 20,
     },
     address: {
         color: Colors.primary500,
         textAlign: 'center',
         fontWeight: 'bold',
-        fontSize: 16
-     }
-
+        fontSize: 16,
+    },
 });
-
-export default PlaceDetails;
