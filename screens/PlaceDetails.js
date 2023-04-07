@@ -63,7 +63,12 @@ const styles = StyleSheet.create({
     image: {
         height: '35%',
         minHeight: 300,
+        borderRadius: 15,
         width: '100%',
+        marginTop: 15,
+        marginVertical: 20,
+        borderWidth: 4,
+        borderColor: Colors.primary500
     },
     locationContainer: {
         justifyContent: 'center',
