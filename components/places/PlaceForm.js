@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         borderRadius: 6
     },
     marginButton: {
-        marginTop: 10
+        marginTop: 13
     }
 })
 
