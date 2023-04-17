@@ -64,9 +64,9 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
         fontSize: 16,
         borderBottomColor: Colors.primary700,
-        borderBottomWidth: 2,
+        borderBottomWidth: 3,
         backgroundColor: Colors.primary100,
-        borderRadius: 6
+        borderRadius: 5
     },
     marginButton: {
         marginTop: 13
