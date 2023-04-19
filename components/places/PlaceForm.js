@@ -53,9 +53,9 @@ const styles = StyleSheet.create({
     },
     label: {
         fontWeight: "bold",
-        marginBottom: 4,
+        marginBottom: 6,
         color: Colors.primary500,
-        fontSize: 20,
+        fontSize: 22,
         textAlign: 'center'
     },
     input: {
